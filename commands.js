@@ -1,10 +1,18 @@
-import { REST, Routes } from "discord.js";
+import { REST, Routes, ApplicationCommandOptionType } from "discord.js";
 import config from "./config.js";
 
 const commands = [
   {
-    name: 'ping',
-    description: 'Replies with Pong!',
+    name: 'country',
+    description: 'Replies with country info',
+    options: [
+      {
+        name: 'country-name',
+        description: 'Country name',
+        type: ApplicationCommandOptionType.String,
+        required: true
+      }
+    ]
   },
 ];
 

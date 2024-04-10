@@ -1,4 +1,5 @@
 import { Client, GatewayIntentBits, IntentsBitField } from 'discord.js';
+import axios from "axios";
 import config from './config.js';
 
 const client = new Client({
@@ -33,13 +34,24 @@ client.on('messageCreate', async (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  // console.log(interaction);
-  if (!interaction.isChatInputCommand()) return;
+  try {
+    // console.log(interaction);
+    if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === 'ping') {
-    await interaction.reply('Pong!');
+    if (interaction.commandName === 'country') {
+      const countryName = interaction.options.get('country-name');
+      // console.log(countryName);
+
+      const countryData = await axios.get(`https://restcountries.com/v3.1/name/${countryName.value}`)
+        .then(res => res.data)
+        .catch(err => err)
+      // console.log(countryData);
+
+      await interaction.reply(countryData[0].flags.png);
+    }
+  } catch (error) {
+    await interaction.reply('No country found...🔴');
   }
-
 });
 
 
