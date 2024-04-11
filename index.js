@@ -1,6 +1,7 @@
 import { Client, GatewayIntentBits, IntentsBitField } from 'discord.js';
 import axios from "axios";
 import config from './config.js';
+import restCountries from './services/country.service.js';
 
 const client = new Client({
   intents: [
@@ -34,24 +35,11 @@ client.on('messageCreate', async (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-  try {
-    // console.log(interaction);
-    if (!interaction.isChatInputCommand()) return;
+  // console.log(interaction);
+  if (!interaction.isChatInputCommand()) return;
 
-    if (interaction.commandName === 'country') {
-      const countryName = interaction.options.get('country-name');
-      // console.log(countryName);
+  if (interaction.commandName === 'country') restCountries(interaction)
 
-      const countryData = await axios.get(`https://restcountries.com/v3.1/name/${countryName.value}`)
-        .then(res => res.data)
-        .catch(err => err)
-      // console.log(countryData);
-
-      await interaction.reply(countryData[0].flags.png);
-    }
-  } catch (error) {
-    await interaction.reply('No country found...🔴');
-  }
 });
 
 
