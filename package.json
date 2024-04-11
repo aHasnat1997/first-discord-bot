@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
-    "commands": "node commands.js",
+    "commands": "node src/commands/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

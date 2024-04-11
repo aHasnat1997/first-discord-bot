@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits, IntentsBitField } from 'discord.js';
-import axios from "axios";
-import config from './config.js';
-import restCountries from './services/country.service.js';
+import config from './src/config/index.js';
+import restCountries from './src/services/country.service.js';
+import joke from './src/services/joke.service.js';
 
 const client = new Client({
   intents: [
@@ -38,8 +38,9 @@ client.on('interactionCreate', async (interaction) => {
   // console.log(interaction);
   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === 'country') restCountries(interaction)
+  if (interaction.commandName === 'country') restCountries(interaction);
 
+  if (interaction.commandName === 'joke') joke(interaction);
 });
 
 
