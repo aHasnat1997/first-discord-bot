@@ -25,10 +25,8 @@ client.on('messageCreate', async (message) => {
   if (message.author.bot) return;
 
   if (
-    message.content === 'hi' ||
-    message.content === 'Hi' ||
-    message.content === 'Hello' ||
-    message.content === 'hello'
+    message.content.toLocaleLowerCase() === 'hi' ||
+    message.content.toLocaleLowerCase() === 'hello'
   ) {
     await message.reply(`🖐️ Hello ${message.author.globalName}...`);
   }

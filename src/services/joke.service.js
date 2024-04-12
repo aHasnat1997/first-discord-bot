@@ -10,12 +10,9 @@ const joke = async (interaction) => {
       .catch(err => err)
     // console.log(jokeData);
 
-    await interaction.reply(jokeData.setup);
-    setTimeout(async () => {
-      await interaction.followUp(jokeData.delivery);
-    }, 1000)
-
+    await interaction.reply(`${jokeData.setup} \n || ${jokeData.delivery} ||`);
   } catch (error) {
+    console.log(error);
     await interaction.reply('🔴 No joke found...');
   }
 }
