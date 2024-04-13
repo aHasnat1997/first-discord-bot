@@ -2,7 +2,6 @@ import { ActionRowBuilder, ButtonStyle, ComponentType } from 'discord.js';
 import axios from "axios";
 import { buildButton } from '../utils/buildButton.js';
 
-
 const restCountries = async (interaction) => {
   try {
     const countryName = interaction.options.get('country-name');

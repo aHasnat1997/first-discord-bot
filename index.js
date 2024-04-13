@@ -1,7 +1,9 @@
-import { Client, GatewayIntentBits, IntentsBitField } from 'discord.js';
+import { Client, GatewayIntentBits } from 'discord.js';
 import config from './src/config/index.js';
-import restCountries from './src/services/country.service.js';
-import joke from './src/services/joke.service.js';
+import readyEvent from './src/events/ready.js';
+import messageCreateEvent from './src/events/messageCreate.js';
+import guildMemberAddEvent from './src/events/guildMemberAdd.js';
+import interactionCreateEvent from './src/events/interactionCreate.js';
 
 const client = new Client({
   intents: [
@@ -16,30 +18,13 @@ const client = new Client({
   ],
 });
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-});
+client.once('ready', () => readyEvent(client))
 
-client.on('messageCreate', async (message) => {
-  // console.log(message);
-  if (message.author.bot) return;
+client.on('messageCreate', messageCreateEvent);
 
-  if (
-    message.content.toLocaleLowerCase() === 'hi' ||
-    message.content.toLocaleLowerCase() === 'hello'
-  ) {
-    await message.reply(`🖐️ Hello ${message.author.globalName}...`);
-  }
-});
+client.on('guildMemberAdd', guildMemberAddEvent);
 
-client.on('interactionCreate', async (interaction) => {
-  // console.log(interaction);
-  if (!interaction.isChatInputCommand()) return;
-
-  if (interaction.commandName === 'country') restCountries(interaction);
-
-  if (interaction.commandName === 'joke') joke(interaction);
-});
+client.on('interactionCreate', interactionCreateEvent);
 
 
 client.login(config.TOKEN);
