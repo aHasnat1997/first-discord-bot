@@ -5,7 +5,16 @@ export default function interactionCreateEvent(interaction) {
   // console.log(interaction);
   if (!interaction.isChatInputCommand()) return;
 
-  if (interaction.commandName === 'country') restCountries(interaction);
+  switch (interaction.commandName) {
+    case 'country':
+      restCountries(interaction);
+      break;
+    case 'joke':
+      joke(interaction);
+      break;
 
-  if (interaction.commandName === 'joke') joke(interaction);
+    default:
+      break;
+  }
+
 }
